@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"_postman_id": "780d876c-d709-4e56-8239-5db662f7b6fa",
+			"_postman_id": "4b0bd572-4779-4b75-acd4-a343aff4b0a5",
 			"name": "create compony with employee",
 			"event": [
 				{
@@ -53,7 +53,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "85aa2cae-f4ce-4f0a-a4bc-6def941ff177",
+			"_postman_id": "bfbc129b-ef5c-400c-b410-a1df0ee6909e",
 			"name": "create company without employees",
 			"request": {
 				"method": "POST",
@@ -84,7 +84,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "abdb06b1-a953-422e-b4b8-53fbcfac5db8",
+			"_postman_id": "0c1ca86b-867a-4b68-af00-b9799daa0fb0",
 			"name": "all companies",
 			"event": [
 				{
@@ -128,7 +128,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "a0c22d56-be4e-4000-8d13-51c92787de7f",
+			"_postman_id": "02ba4f3a-c5e1-479f-b030-740ce950163d",
 			"name": "get compony by id",
 			"event": [
 				{
@@ -176,7 +176,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "5d3766e8-dac4-4b7e-a664-0339fe4463bd",
+			"_postman_id": "14264d3f-adc8-471d-b328-3d8904043c61",
 			"name": "update compony not change employees",
 			"event": [
 				{
@@ -229,7 +229,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "c1045a58-7945-4ef3-add9-bb5e685a0c86",
+			"_postman_id": "29e2cfbb-0b76-45bb-b5cb-be9e3efd073b",
 			"name": "update compony add employees",
 			"event": [
 				{
@@ -282,7 +282,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "07fedae7-3d33-47fd-a6e6-3b878a0a8bae",
+			"_postman_id": "8635d3ac-5763-4ae5-b450-e0d531c8d437",
 			"name": "delete company",
 			"event": [
 				{
@@ -329,7 +329,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "7fa72262-5d78-4d3a-9014-0ce4eb766074",
+			"_postman_id": "043b0dab-da79-491f-9036-233aeeb11b1a",
 			"name": "companyList page",
 			"event": [
 				{
@@ -383,7 +383,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "a1b16936-47a9-4e06-b1d2-25520397566a",
+			"_postman_id": "a7cea270-2edf-45ac-a563-49b301b9ac9d",
 			"name": "create employee",
 			"event": [
 				{
@@ -430,7 +430,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "71288a43-c671-451b-849d-a869a09629e8",
+			"_postman_id": "3bdb3247-6515-4f6e-8a1a-b4ca5741bafd",
 			"name": "update  employee  by employee",
 			"event": [
 				{
@@ -478,7 +478,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "74bd1eee-71fe-4ddf-9621-c931a92ef11b",
+			"_postman_id": "5f204ee9-0e07-4c70-91f3-f273841cfd47",
 			"name": "get employees id",
 			"event": [
 				{
@@ -526,7 +526,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "2376eecc-b33f-4a09-9325-5f82466bdc14",
+			"_postman_id": "7938f3b1-08f4-4d86-a852-60fedd003f8d",
 			"name": "get compony filter male",
 			"event": [
 				{
@@ -574,7 +574,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "3c228d1a-ae9f-49a1-8252-bb34d6fef8aa",
+			"_postman_id": "1fee2db8-e71a-47cf-b4e2-2937a969f331",
 			"name": "delete employees",
 			"event": [
 				{
@@ -621,7 +621,7 @@
 			"response": []
 		},
 		{
-			"_postman_id": "e7028afd-3208-4f29-b321-bc0f512994f8",
+			"_postman_id": "ab04bb39-ce3e-4bf5-93fe-37e8052e62c5",
 			"name": "employeeList page",
 			"event": [
 				{
@@ -669,6 +669,55 @@
 							"key": "size",
 							"value": "5 "
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "c9cce864-fd42-4888-bf3a-684d7f32f53b",
+			"name": "get emloyees by companyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5ec0e40-06f9-430d-b54a-be27ab8fcf91",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"tw\",\n\t\"employees\":[{\n\t\t\"name\": \"Tom\"\n\t}] \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/19/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"19",
+						"employees"
 					]
 				}
 			},

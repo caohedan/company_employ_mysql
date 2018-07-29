@@ -22,8 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/companies")
 public class CompanyController {
-//
-   @Autowired
+
     private CompanyRepository repository;
 //
 

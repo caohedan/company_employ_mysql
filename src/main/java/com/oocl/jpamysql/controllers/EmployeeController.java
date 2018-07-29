@@ -5,7 +5,6 @@ import com.oocl.jpamysql.entities.Employee;
 import com.oocl.jpamysql.exception.ResourceNullException;
 import com.oocl.jpamysql.exception.WrongRequestException;
 import com.oocl.jpamysql.service.EmployeeService;
-import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;

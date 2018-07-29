@@ -11,13 +11,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,11 +99,11 @@ private EmployeeService employeeService;
                 .andExpect(status().isBadRequest());
     }
     @Test
-    public void should_return_maleList_when_call_getAll_and_the_size_is_not_zero() throws Exception {
+    public void should_return_employeeList_when_call_getAll_and_the_size_is_not_zero() throws Exception {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("tom","male"));
-        given(employeeService.findEmployeeListByPage(any())).willReturn(employees);
-        mockMvc.perform(get("/api/v1/employees?page=1&size=1").contentType(MediaType.APPLICATION_JSON_VALUE))
+        given(employeeService.findEmployeeListByPage(any(Pageable.class))).willReturn(employees);
+        mockMvc.perform(get("/api/v1/employees").contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$[0].name").value("tom"));
     }
 }

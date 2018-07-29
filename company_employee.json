@@ -1,0 +1,678 @@
+{
+	"info": {
+		"_postman_id": "873ae49d-5827-4d9c-9b2e-5dfafd8be742",
+		"name": "jpa-practices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "780d876c-d709-4e56-8239-5db662f7b6fa",
+			"name": "create compony with employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5ec0e40-06f9-430d-b54a-be27ab8fcf91",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"tw\",\n\t\"employees\":[{\n\t\t\"name\": \"Tom\"\n\t}] \n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "85aa2cae-f4ce-4f0a-a4bc-6def941ff177",
+			"name": "create company without employees",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"tw\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "abdb06b1-a953-422e-b4b8-53fbcfac5db8",
+			"name": "all companies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77922c5b-e16c-48cf-92b7-3f7f64ba6731",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(1);",
+							"    pm.expect(jsonData.employees.length).to.eql(1);",
+							"",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a0c22d56-be4e-4000-8d13-51c92787de7f",
+			"name": "get compony by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c978dbd7-d7b2-4ce2-b886-1eb9d2b8e5b2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/17",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"17"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "5d3766e8-dac4-4b7e-a664-0339fe4463bd",
+			"name": "update compony not change employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0aa8bbf-7785-4a72-acf2-3e07ddb93788",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/api/v1/companies/1\", function (err, response) {",
+							"    pm.test(\"Your test name\", function () {",
+							"        var jsonData = response.json();",
+							"        pm.expect(jsonData.id).to.eql(1);",
+							"        pm.expect(jsonData.name).to.eql(\"tw-oocl\");",
+							"});",
+							"    ",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"tw-oocl\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "c1045a58-7945-4ef3-add9-bb5e685a0c86",
+			"name": "update compony add employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0aa8bbf-7785-4a72-acf2-3e07ddb93788",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/api/v1/companies/1\", function (err, response) {",
+							"    pm.test(\"Your test name\", function () {",
+							"        var jsonData = response.json();",
+							"        pm.expect(jsonData.id).to.eql(1);",
+							"        pm.expect(jsonData.name).to.eql(\"tw-oocl\");",
+							"});",
+							"    ",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"name\": \"tw-oocl\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "07fedae7-3d33-47fd-a6e6-3b878a0a8bae",
+			"name": "delete company",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ef6fc58-db7c-4785-84b0-c06c081aa74e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/api/v1/companies\", function (err, response) {",
+							"    pm.test(\"Your test name\", function () {",
+							"        var jsonData = response.json();",
+							"        pm.expect(jsonData.length).to.eql(0);",
+							"});",
+							"    ",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "7fa72262-5d78-4d3a-9014-0ce4eb766074",
+			"name": "companyList page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77922c5b-e16c-48cf-92b7-3f7f64ba6731",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(1);",
+							"    pm.expect(jsonData.employees.length).to.eql(1);",
+							"",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies?page=0&size=5 ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a1b16936-47a9-4e06-b1d2-25520397566a",
+			"name": "create employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5ec0e40-06f9-430d-b54a-be27ab8fcf91",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n\t\t\"name\": \"Tom\",\n\t\t\"gender\":\"male\"\n\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "71288a43-c671-451b-849d-a869a09629e8",
+			"name": "update  employee  by employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c978dbd7-d7b2-4ce2-b886-1eb9d2b8e5b2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":16,\n\t\"name\":\"Lion\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees/16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "74bd1eee-71fe-4ddf-9621-c931a92ef11b",
+			"name": "get employees id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c978dbd7-d7b2-4ce2-b886-1eb9d2b8e5b2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "2376eecc-b33f-4a09-9325-5f82466bdc14",
+			"name": "get compony filter male",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c978dbd7-d7b2-4ce2-b886-1eb9d2b8e5b2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).to.eql(1);",
+							"    pm.expect(jsonData.name).to.eql(\"tw\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees/male",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"male"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "3c228d1a-ae9f-49a1-8252-bb34d6fef8aa",
+			"name": "delete employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ef6fc58-db7c-4785-84b0-c06c081aa74e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest(\"http://localhost:8080/api/v1/companies\", function (err, response) {",
+							"    pm.test(\"Your test name\", function () {",
+							"        var jsonData = response.json();",
+							"        pm.expect(jsonData.length).to.eql(0);",
+							"});",
+							"    ",
+							"    ",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "e7028afd-3208-4f29-b321-bc0f512994f8",
+			"name": "employeeList page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77922c5b-e16c-48cf-92b7-3f7f64ba6731",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(1);",
+							"    pm.expect(jsonData.employees.length).to.eql(1);",
+							"",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employees?page=0&size=5 ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5 "
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

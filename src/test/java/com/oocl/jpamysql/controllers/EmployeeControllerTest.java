@@ -6,24 +6,31 @@ import com.oocl.jpamysql.entities.Employee;
 import com.oocl.jpamysql.exception.ResourceNullException;
 import com.oocl.jpamysql.exception.WrongRequestException;
 import com.oocl.jpamysql.service.EmployeeService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,6 +45,14 @@ private MockMvc mockMvc;
 private ObjectMapper mapper;
 @MockBean
 private EmployeeService employeeService;
+@InjectMocks
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+    @Before()
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(employeeService).setCustomArgumentResolvers(pageableArgumentResolver)
+                .build();
+    }
     @Test
     public void should_return_the_Employee_when_add_a_employee() throws Exception {
         Employee employee = new Employee("tom","male");
@@ -102,8 +117,17 @@ private EmployeeService employeeService;
     public void should_return_employeeList_when_call_getAll_and_the_size_is_not_zero() throws Exception {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee("tom","male"));
-        given(employeeService.findEmployeeListByPage(any(Pageable.class))).willReturn(employees);
-        mockMvc.perform(get("/api/v1/employees").contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$[0].name").value("tom"));
+        given(employeeService.findEmployeeListByPage(any())).willReturn(employees);
+//        ResultActions resultActions = mockMvc.perform(get("/api/v1/employees?page=1&size=1").contentType(MediaType.APPLICATION_JSON));
+//        resultActions.andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(1)));
+        mockMvc.perform(get("/api/v1/employees").contentType(MediaType.APPLICATION_JSON_VALUE)).andDo(print());
     }
+    @Test
+    public void should_return_NOT_FOUND_when_call_getAll_and_the_size_is_not_zero() throws Exception {
+        given(employeeService.findEmployeeListByPage(any())).willThrow(new ResourceNullException("null"));
+        mockMvc.perform(get("/api/v1/employees").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound());
+    }
+
 }

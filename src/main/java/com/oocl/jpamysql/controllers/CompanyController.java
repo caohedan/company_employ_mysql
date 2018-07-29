@@ -3,6 +3,7 @@ package com.oocl.jpamysql.controllers;
 import com.oocl.jpamysql.controllers.dto.CompanyDTO;
 import com.oocl.jpamysql.entities.Company;
 import com.oocl.jpamysql.entities.Employee;
+import com.oocl.jpamysql.exception.WrongRequestException;
 import com.oocl.jpamysql.repositories.CompanyRepository;
 import com.oocl.jpamysql.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class CompanyController {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CompanyDTO get(@PathVariable("id")Long id) {
         Company company = service.getOneById(id);
+        if(company == null)
+        {
+            throw  new WrongRequestException("id is not exist");
+        }
         return new CompanyDTO(company);
     }
     @Transactional
@@ -64,8 +69,12 @@ public class CompanyController {
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Company delete(@PathVariable("id")Long id) {
-      ;
-        return service.deleteByCompany(id);
+         Company company = service.deleteByCompany(id);
+         if(company == null)
+         {
+             throw  new WrongRequestException("id is not exist");
+         }
+        return company;
     }
     @Transactional
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)

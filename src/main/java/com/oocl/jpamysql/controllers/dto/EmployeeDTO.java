@@ -24,6 +24,12 @@ public class EmployeeDTO {
     public EmployeeDTO(Employee employee) {
         this.id = employee.getId();
         this.name = employee.getName();
-        this.companyId = employee.getCompany().getId();
+        if(employee.getCompany()!=null)
+        {
+            this.companyId = employee.getCompany().getId();
+        }
+        else {
+            this.companyId = null;
+        }
     }
 }

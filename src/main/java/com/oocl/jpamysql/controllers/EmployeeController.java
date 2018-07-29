@@ -2,10 +2,12 @@ package com.oocl.jpamysql.controllers;
 
 import com.oocl.jpamysql.controllers.dto.EmployeeDTO;
 import com.oocl.jpamysql.entities.Employee;
+import com.oocl.jpamysql.exception.ResourceNullException;
+import com.oocl.jpamysql.exception.WrongRequestException;
 import com.oocl.jpamysql.service.EmployeeService;
+import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,36 +25,56 @@ public class EmployeeController {
     @Transactional
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee save(@RequestBody Employee employee) {
+
         return  service.save(employee);
     }
 
     @Transactional
-    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@RequestBody Employee employee) {
-        service.update(employee);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return service.update(employee);
     }
 
     @Transactional
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EmployeeDTO get(@PathVariable("id")Long id) {
-        Employee employee = service.getOne(id);
-        return new EmployeeDTO(employee);
+        EmployeeDTO employee = service.getOne(id);
+        if(employee == null)
+        {
+            throw new WrongRequestException("the id is not exist");
+        }
+        return employee;
     }
     @Transactional
     @GetMapping(path = "/male", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllMale() {
-              return  service.findAllMales("male");
+        List<Employee>  employees = service.findAllMales();
+        if(employees.size() == 0)
+        {
+            throw new ResourceNullException("no match");
+        }
+        return  employees;
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee delete(@PathVariable("id")Long id) {
-        return service.delete(id);
+        Employee employee =  service.delete(id);
+        if(employee == null)
+        {
+            throw new WrongRequestException("the id is not exist");
+        }
+        return employee;
     }
-//    @Transactional
-//    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public  List<Employee> companyList(Pageable pageable) {
-//       return  service.findEmployeeListByPage(pageable);
-//    }
+    @Transactional
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public  List<Employee> companyList(Pageable pageable) {
+        List<Employee>  employees = service.findEmployeeListByPage(pageable);
+        if(employees.size() == 0)
+        {
+            throw new ResourceNullException("no match");
+        }
+        return  employees;
+    }
+
 }

@@ -20,6 +20,7 @@ public class Employee {
     @CreatedDate
     private ZonedDateTime createdDate = ZonedDateTime.now();
     private String gender;
+
     public Company getCompany() {
         return company;
     }

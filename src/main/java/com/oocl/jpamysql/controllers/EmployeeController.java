@@ -3,6 +3,7 @@ package com.oocl.jpamysql.controllers;
 import com.oocl.jpamysql.controllers.dto.EmployeeDTO;
 import com.oocl.jpamysql.entities.Employee;
 import com.oocl.jpamysql.repositories.EmployeeRepository;
+import com.oocl.jpamysql.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,46 +21,41 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository repository;
     @Autowired
-    public EmployeeController(EmployeeRepository repository) {
-        this.repository = repository;
-    }
+    private EmployeeService service;
 
     @Transactional
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee save(@RequestBody Employee employee) {
-        return  repository.save(employee);
+        return  service.save(employee);
     }
 
     @Transactional
     @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@RequestBody Employee employee) {
-        repository.save(employee);
+        service.update(employee);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Transactional
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EmployeeDTO get(@PathVariable("id")Long id) {
-        Employee employee = repository.getOne(id);
+        Employee employee = service.getOne(id);
         return new EmployeeDTO(employee);
     }
     @Transactional
     @GetMapping(path = "/male", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllMale() {
-              return  repository.findByGender("male");
+              return  service.findAllMales("male");
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee delete(@PathVariable("id")Long id) {
-        Employee one = repository.getOne(id);
-        repository.delete(one);
-        return one;
+        return service.delete(id);
     }
     @Transactional
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public  List<Employee> companyList(Pageable pageable) {
-        Page<Employee> companyList = repository.findAll(pageable);
-        return  companyList.getContent();
+       return  service.findEmployeeListByPage(pageable);
     }
 }

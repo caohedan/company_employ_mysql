@@ -1,4 +1,12 @@
 "# company_employee_mysql" 
+### 作业要求
+```html
+1.将程序转为mysql程序
+2.测试controller
+3。测试repository
+ps:repository全是调用已有方法，有一些就没有编写测试用例了。
+
+```
 ### 1.Delete时出现异常：
 #### No serializer found for class org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer...org
 #### 原因：

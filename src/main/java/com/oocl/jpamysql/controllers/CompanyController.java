@@ -3,6 +3,7 @@ package com.oocl.jpamysql.controllers;
 import com.oocl.jpamysql.controllers.dto.CompanyDTO;
 import com.oocl.jpamysql.entities.Company;
 import com.oocl.jpamysql.entities.Employee;
+import com.oocl.jpamysql.exception.ResourceNullException;
 import com.oocl.jpamysql.exception.WrongRequestException;
 import com.oocl.jpamysql.repositories.CompanyRepository;
 import com.oocl.jpamysql.service.CompanyService;
@@ -34,7 +35,7 @@ public class CompanyController {
         company.getEmployees().stream().forEach(employee -> {
             employee.setCompany(company);
         });
-        return  service.save(company);
+        return service.save(company);
     }
 
 
@@ -50,36 +51,42 @@ public class CompanyController {
 
     @Transactional
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CompanyDTO get(@PathVariable("id")Long id) {
+    public CompanyDTO get(@PathVariable("id") Long id) {
         Company company = service.getOneById(id);
-        if(company == null)
-        {
-            throw  new WrongRequestException("id is not exist");
+        if (company == null) {
+            throw new WrongRequestException("id is not exist");
         }
         return new CompanyDTO(company);
     }
+
     @Transactional
-    @GetMapping(path = "/{id}/empolyees", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Employee> getOneOfEmployees(@PathVariable("id")Long id) {
+    @GetMapping(path = "/{id}/employees", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getOneOfEmployees(@PathVariable("id") Long id) {
         Company company = service.getOneById(id);
         List<Employee> employees = company.getEmployees();
+        if (employees.size() == 0) {
+            throw new ResourceNullException("no match!");
+        }
         return employees;
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company delete(@PathVariable("id")Long id) {
-         Company company = service.deleteByCompany(id);
-         if(company == null)
-         {
-             throw  new WrongRequestException("id is not exist");
-         }
+    public Company delete(@PathVariable("id") Long id) {
+        Company company = service.deleteByCompany(id);
+        if (company == null) {
+            throw new WrongRequestException("id is not exist");
+        }
         return company;
     }
+
     @Transactional
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Company> companyList(Pageable pageable) {
-
-        return service.getCompanyByPageInfo(pageable);
+    public List<Company> companyList(Pageable pageable) {
+        List<Company> companies = service.getCompanyByPageInfo(pageable);
+        if (companies.size() == 0) {
+            throw new ResourceNullException("No match !");
+        }
+        return companies;
     }
 }

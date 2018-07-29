@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 
 @Table
 @Entity
-//@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler"})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Employee {
 
     @CreatedDate
     private ZonedDateTime createdDate = ZonedDateTime.now();
-
+    private String gender;
     public Company getCompany() {
         return company;
     }
@@ -29,7 +29,7 @@ public class Employee {
     }
 
     @JsonIgnore
-    @ManyToOne()
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -58,5 +58,13 @@ public class Employee {
 
     public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

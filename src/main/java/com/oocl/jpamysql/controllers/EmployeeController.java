@@ -1,64 +1,65 @@
 package com.oocl.jpamysql.controllers;
 
+import com.oocl.jpamysql.controllers.dto.EmployeeDTO;
+import com.oocl.jpamysql.entities.Employee;
+import com.oocl.jpamysql.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/emoloyees")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
     @Autowired
-    private CompanyRepository repository;
+    private EmployeeRepository repository;
     @Autowired
-    public EmployeeController(EmployeeController repository) {
+    public EmployeeController(EmployeeRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company save(@RequestBody Company company) {
-        company.getEmployees().stream().forEach(employee -> {
-            employee.setCompany(company);
-        });
-        return  repository.save(company);
+    public Employee save(@RequestBody Employee employee) {
+        return  repository.save(employee);
     }
-
 
     @Transactional
     @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@RequestBody Company company) {
-        company.getEmployees().stream().filter(employee -> employee.getCompany() == null).forEach(employee -> {
-            employee.setCompany(company);
-        });
-        repository.save(company);
+    public ResponseEntity update(@RequestBody Employee employee) {
+        repository.save(employee);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Transactional
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CompanyDTO get(@PathVariable("id")Long id) {
-        Company company = repository.getOne(id);
-        return new CompanyDTO(company);
+    public EmployeeDTO get(@PathVariable("id")Long id) {
+        Employee employee = repository.getOne(id);
+        return new EmployeeDTO(employee);
     }
     @Transactional
-    @GetMapping(path = "/{id}/empolyees", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Employee> getOneOfEmployees(@PathVariable("id")Long id) {
-        Company company = repository.getOne(id);
-        List<Employee> employees = company.getEmployees();
-        return employees;
+    @GetMapping(path = "/male", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getAllMale() {
+              return  repository.findByGender("male");
     }
 
     @Transactional
     @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company delete(@PathVariable("id")Long id) {
-        Company one = repository.getOne(id);
+    public Employee delete(@PathVariable("id")Long id) {
+        Employee one = repository.getOne(id);
         repository.delete(one);
         return one;
     }
     @Transactional
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Company> companyList(Pageable pageable) {
-        Page<Company> companyList = repository.findAll(pageable);
+    public  List<Employee> companyList(Pageable pageable) {
+        Page<Employee> companyList = repository.findAll(pageable);
         return  companyList.getContent();
     }
 }

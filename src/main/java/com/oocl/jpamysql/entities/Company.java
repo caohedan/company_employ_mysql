@@ -25,7 +25,7 @@ public class Company {
     @CreatedDate
     private ZonedDateTime createdDate = ZonedDateTime.now();
 
-    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST}, mappedBy = "company", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", fetch = FetchType.LAZY)
     private List<Employee> employees = new ArrayList<>();
     public Company(Long id, String name) {
         this.id = id;

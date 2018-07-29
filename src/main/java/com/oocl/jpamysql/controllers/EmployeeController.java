@@ -2,10 +2,8 @@ package com.oocl.jpamysql.controllers;
 
 import com.oocl.jpamysql.controllers.dto.EmployeeDTO;
 import com.oocl.jpamysql.entities.Employee;
-import com.oocl.jpamysql.repositories.EmployeeRepository;
 import com.oocl.jpamysql.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,8 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeeController {
-    @Autowired
-    private EmployeeRepository repository;
+
     @Autowired
     private EmployeeService service;
 
@@ -53,9 +50,9 @@ public class EmployeeController {
     public Employee delete(@PathVariable("id")Long id) {
         return service.delete(id);
     }
-    @Transactional
-    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Employee> companyList(Pageable pageable) {
-       return  service.findEmployeeListByPage(pageable);
-    }
+//    @Transactional
+//    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public  List<Employee> companyList(Pageable pageable) {
+//       return  service.findEmployeeListByPage(pageable);
+//    }
 }

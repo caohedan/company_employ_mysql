@@ -25,18 +25,10 @@ repositories {
 
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-actuator'
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile 'org.springframework.boot:spring-boot-starter-web'
-	compile "org.springframework.boot:spring-boot-starter-hateoas"
-//	compile "org.flywaydb:flyway-core:5.1.4"
-	compile("org.springframework.boot:spring-boot-starter-data-rest")
+	runtime('com.h2database:h2')
 	runtime 'mysql:mysql-connector-java'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	testCompile('org.junit.jupiter:junit-jupiter-api:5.0.0')
-	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.0.0')
-	testRuntime('org.junit.platform:junit-platform-engine:1.2.0')
-	testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
-	testCompile 'org.junit.vintage:junit-vintage-engine:5.2.0'
+
 }

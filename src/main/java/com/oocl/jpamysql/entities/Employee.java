@@ -1,6 +1,7 @@
 package com.oocl.jpamysql.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.ZonedDateTime;
 
 @Table
 @Entity
+//@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class Employee {
     }
 
     @JsonIgnore
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "company_id")
     private Company company;
 

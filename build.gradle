@@ -9,7 +9,9 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
-
+plugins {
+	id "org.flywaydb.flyway" version "5.1.4"
+}
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -29,6 +31,13 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	runtime('com.h2database:h2')
 	runtime 'mysql:mysql-connector-java'
+	compile('org.flywaydb:flyway-core')
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 
+}
+
+flyway{
+	url = 'jdbc:mysql://192.168.99.100/company_employee?useSSL=false'
+	user='root'
+	password = 'root'
 }

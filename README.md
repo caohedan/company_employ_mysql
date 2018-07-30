@@ -3,7 +3,7 @@
 ```html
 1.将程序转为mysql程序
 2.测试controller
-3。测试repository
+3.测试repository
 ps:repository全是调用已有方法，有一些就没有编写测试用例了。
 
 ```
